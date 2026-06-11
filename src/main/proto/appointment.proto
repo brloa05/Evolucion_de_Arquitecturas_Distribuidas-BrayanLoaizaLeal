@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "edu.eci.arsw.evolucion.ejercicio_grpc";
+option java_outer_classname = "AppointmentProto";
+
+enum ServiceType {
+  MEDICINE   = 0;
+  PSYCHOLOGY = 1;
+  DENTISTRY  = 2;
+}
+
+enum AppointmentStatus {
+  REQUESTED = 0;
+  CANCELLED = 1;
+  ATTENDED  = 2;
+}
+
+service AppointmentService {
+  rpc RequestAppointment (AppointmentRequest) returns (AppointmentResponse);
+  rpc CancelAppointment  (CancelRequest)      returns (CancelResponse);
+  rpc GetAppointments    (StudentRequest)      returns (AppointmentList);
+}
+
+message AppointmentRequest {
+  string      studentId          = 1;
+  string      studentName        = 2;
+  string      institutionalEmail = 3;
+  ServiceType serviceType        = 4;
+  string      date               = 5;
+}
+
+message AppointmentResponse {
+  string appointmentId = 1;
+  bool   success       = 2;
+  string message       = 3;
+}
+
+message CancelRequest {
+  string appointmentId = 1;
+}
+
+message CancelResponse {
+  bool   success = 1;
+  string message = 2;
+}
+
+message StudentRequest {
+  string studentId = 1;
+}
+
+message Appointment {
+  string            id          = 1;
+  string            studentId   = 2;
+  ServiceType       serviceType = 3;
+  string            date        = 4;
+  AppointmentStatus status      = 5;
+}
+
+message AppointmentList {
+  repeated Appointment appointments = 1;
+}
