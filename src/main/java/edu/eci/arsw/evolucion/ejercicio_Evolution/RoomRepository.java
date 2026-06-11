@@ -1,6 +1,8 @@
-package edu.eci.arsw.evolucion.ejercicio_tcp;
+package edu.eci.arsw.evolucion.ejercicio_Evolution;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RoomRepository {
@@ -20,6 +22,10 @@ public class RoomRepository {
             }
         }
         return null;
+    }
+
+    public List<Room> getAll() {
+        return new ArrayList<>(repository.values());
     }
 
 }
