@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_package = "edu.eci.arsw.evolucion.eciciencia";
+option java_outer_classname = "CourseProto";
+option java_multiple_files = true;
+
+service CourseService {
+  rpc GetCourses    (EmptyCourseRequest) returns (CourseList);
+  rpc EnrollStudent (EnrollRequest)      returns (EnrollResponse);
+}
+
+message EmptyCourseRequest {}
+
+message Course {
+  string course_id       = 1;
+  string name            = 2;
+  string professor       = 3;
+  int32  available_slots = 4;
+}
+
+message CourseList {
+  repeated Course courses = 1;
+}
+
+message EnrollRequest {
+  string student_id = 1;
+  string course_id  = 2;
+}
+
+message EnrollResponse {
+  bool   success = 1;
+  string message = 2;
+}

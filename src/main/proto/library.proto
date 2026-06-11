@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option java_package = "edu.eci.arsw.evolucion.eciciencia";
+option java_outer_classname = "LibraryProto";
+option java_multiple_files = true;
+
+service LibraryService {
+  rpc SearchBooks (SearchRequest) returns (BookList);
+  rpc BorrowBook  (BorrowRequest) returns (BorrowResponse);
+}
+
+message SearchRequest {
+  string query = 1;
+}
+
+message Book {
+  string book_id   = 1;
+  string title     = 2;
+  string author    = 3;
+  bool   available = 4;
+}
+
+message BookList {
+  repeated Book books = 1;
+}
+
+message BorrowRequest {
+  string student_id = 1;
+  string book_id    = 2;
+}
+
+message BorrowResponse {
+  bool   success  = 1;
+  string message  = 2;
+  string due_date = 3;
+}

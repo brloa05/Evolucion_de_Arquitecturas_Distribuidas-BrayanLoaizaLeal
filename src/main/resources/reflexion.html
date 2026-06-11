@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reflexion - Evolucion de Arquitecturas Distribuidas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; color: #333; }
+    header {
+      background: linear-gradient(135deg, #1a237e, #283593);
+      color: white; padding: 40px 60px;
+    }
+    header h1 { font-size: 2rem; }
+    header p  { margin-top: 8px; font-size: 1rem; opacity: 0.85; }
+    main { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+
+    .evolution-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-left: 5px solid;
+    }
+    .card h3 { font-size: 1.1rem; margin-bottom: 10px; }
+    .card p  { font-size: 0.9rem; line-height: 1.6; color: #555; }
+    .card .port { font-size: 0.75rem; font-weight: bold; margin-top: 8px; opacity: 0.7; }
+
+    .card-tcp    { border-color: #e53935; }
+    .card-http   { border-color: #fb8c00; }
+    .card-rmi    { border-color: #fdd835; }
+    .card-grpc   { border-color: #43a047; }
+    .card-micro  { border-color: #00897b; }
+    .card-gw     { border-color: #1e88e5; }
+
+    .section { background: white; border-radius: 10px; padding: 30px; margin-bottom: 24px;
+               box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .section h2 { font-size: 1.3rem; margin-bottom: 16px; color: #1a237e; border-bottom: 2px solid #e8eaf6; padding-bottom: 10px; }
+
+    .arch-diagram {
+      background: #1e1e2e; color: #cdd6f4; border-radius: 8px;
+      padding: 24px; font-family: monospace; font-size: 0.85rem;
+      line-height: 1.8; overflow-x: auto; white-space: pre;
+    }
+
+    .comparison-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .comparison-table th { background: #1a237e; color: white; padding: 10px 14px; text-align: left; }
+    .comparison-table td { padding: 10px 14px; border-bottom: 1px solid #e8eaf6; }
+    .comparison-table tr:hover td { background: #f5f5ff; }
+
+    .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .pros, .cons { padding: 16px; border-radius: 8px; }
+    .pros { background: #e8f5e9; }
+    .cons { background: #fce4ec; }
+    .pros h4 { color: #2e7d32; margin-bottom: 8px; }
+    .cons h4 { color: #c62828; margin-bottom: 8px; }
+    ul { padding-left: 18px; }
+    li { font-size: 0.88rem; margin-bottom: 4px; line-height: 1.5; }
+
+    .reflexion-box { background: #e8eaf6; border-left: 5px solid #3949ab;
+                     padding: 20px 24px; border-radius: 0 8px 8px 0; margin-top: 16px; }
+    .reflexion-box p { line-height: 1.8; font-size: 0.95rem; }
+
+    footer { text-align: center; padding: 30px; font-size: 0.85rem; color: #888; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Evolucion de Arquitecturas Distribuidas con Java</h1>
+  <p>Taller Integrador ARSW 2026-I &mdash; Brayan Loaiza Leal &mdash; ECI</p>
+</header>
+
+<main>
+
+  <!-- EVOLUCION VISUAL -->
+  <h2 style="margin: 30px 0 16px; font-size:1.2rem; color:#333;">Recorrido por las 6 arquitecturas</h2>
+  <div class="evolution-grid">
+    <div class="card card-tcp">
+      <h3>Parte I &mdash; TCP Sockets</h3>
+      <p>Comunicacion de bajo nivel mediante sockets. El servidor acepta conexiones, lee texto plano y responde. Sin protocolo estandarizado, logica manual de parsing.</p>
+      <div class="port">Puertos: 35000 / 31000</div>
+    </div>
+    <div class="card card-http">
+      <h3>Parte II &mdash; HTTP</h3>
+      <p>Protocolo estandar sobre TCP. Rutas, metodos GET/POST y codigos de estado. El cliente puede ser cualquier navegador o herramienta REST.</p>
+      <div class="port">Puertos: 8080 / 8081</div>
+    </div>
+    <div class="card card-rmi">
+      <h3>Parte III &mdash; RMI</h3>
+      <p>Invocacion remota de metodos Java. El cliente llama metodos como si fueran locales. Fuertemente tipado pero acoplado a la JVM.</p>
+      <div class="port">Puertos: 23000 / 24000</div>
+    </div>
+    <div class="card card-grpc">
+      <h3>Parte IV &mdash; gRPC</h3>
+      <p>Contratos en Protocol Buffers (.proto). Alta eficiencia con HTTP/2, tipado fuerte, generacion automatica de stubs en cualquier lenguaje.</p>
+      <div class="port">Puertos: 50051 / 50052</div>
+    </div>
+    <div class="card card-micro">
+      <h3>Parte V &mdash; Microservicios</h3>
+      <p>Cada responsabilidad es un servicio independiente. Escalabilidad granular, despliegue autonomo. El cliente agrega multiples servicios.</p>
+      <div class="port">Puertos: 50055 / 50056 / 50060 / 50061</div>
+    </div>
+    <div class="card card-gw">
+      <h3>Parte VI &mdash; API Gateway</h3>
+      <p>Punto unico de entrada HTTP. Oculta la complejidad interna, agrega servicios, maneja enrutamiento y puede incorporar autenticacion centralizada.</p>
+      <div class="port">Puertos: 8090 / 8091 / 8095</div>
+    </div>
+  </div>
+
+  <!-- DIAGRAMA ECICIENCIA -->
+  <div class="section">
+    <h2>Diagrama de Arquitectura &mdash; Plataforma ECICIENCIA</h2>
+    <div class="arch-diagram">
+                   ┌─────────────────────────────┐
+                   │     Cliente (navegador /     │
+                   │     app movil / curl)        │
+                   └──────────────┬──────────────┘
+                                  │  HTTP :8095
+                   ┌──────────────▼──────────────┐
+                   │      ECICIENCIA Gateway      │
+                   │   (ECICIENCIAGateway.java)   │
+                   └──────┬──────────┬────────────┘
+             gRPC          │          │         gRPC
+           :50070          │          │       :50072
+     ┌────────────┐  gRPC  │   ┌─────▼──────────┐
+     │  Student   │:50071  │   │    Library      │
+     │  Service   │   ┌────▼───┤    Service      │
+     └────────────┘   │ Course │    (libros,     │
+                      │ Service│    prestamos)   │
+                      │        └────────────────┘
+                      └────────────────────────────
+                        (cursos, matriculas)
+
+    Microservicios adicionales (bienestar):
+    ┌──────────────────────────────────────────┐
+    │         WellnessGateway :8091            │
+    └────────┬────────────┬────────────────────┘
+          :50052       :50060              :50061
+    ┌─────────┐   ┌──────────┐       ┌──────────┐
+    │Appoint. │   │ Medical  │       │   Gym    │
+    │ Service │   │ Service  │       │ Service  │
+    └─────────┘   └──────────┘       └──────────┘
+    </div>
+  </div>
+
+  <!-- TABLA COMPARATIVA -->
+  <div class="section">
+    <h2>Comparativa de Arquitecturas</h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Arquitectura</th>
+          <th>Protocolo</th>
+          <th>Acoplamiento</th>
+          <th>Escalabilidad</th>
+          <th>Complejidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>TCP Sockets</td><td>Binario / Texto</td><td>Alto</td><td>Baja</td><td>Baja</td></tr>
+        <tr><td>HTTP</td><td>HTTP/1.1</td><td>Medio</td><td>Media</td><td>Baja</td></tr>
+        <tr><td>RMI</td><td>JRMP (JVM)</td><td>Alto (JVM)</td><td>Baja</td><td>Media</td></tr>
+        <tr><td>gRPC</td><td>HTTP/2 + Protobuf</td><td>Bajo</td><td>Alta</td><td>Media</td></tr>
+        <tr><td>Microservicios</td><td>gRPC / HTTP</td><td>Muy bajo</td><td>Muy alta</td><td>Alta</td></tr>
+        <tr><td>API Gateway</td><td>HTTP</td><td>Muy bajo</td><td>Muy alta</td><td>Alta</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PROS Y CONTRAS DEL API GATEWAY -->
+  <div class="section">
+    <h2>Patron API Gateway &mdash; Ventajas y Desventajas</h2>
+    <div class="pros-cons">
+      <div class="pros">
+        <h4>Ventajas</h4>
+        <ul>
+          <li>Punto de entrada unico para los clientes</li>
+          <li>Oculta la topologia interna de microservicios</li>
+          <li>Centraliza autenticacion, logging y rate limiting</li>
+          <li>Reduce el numero de llamadas del cliente</li>
+          <li>Permite evolucion independiente de servicios internos</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <h4>Desventajas</h4>
+        <ul>
+          <li>Punto unico de fallo si no hay redundancia</li>
+          <li>Latencia adicional por la capa extra de enrutamiento</li>
+          <li>Mayor complejidad operacional</li>
+          <li>Puede convertirse en un cuello de botella</li>
+          <li>Logica de agregacion puede volverse compleja</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFLEXION FINAL -->
+  <div class="section">
+    <h2>Reflexion Final</h2>
+    <div class="reflexion-box">
+      <p>
+        A lo largo de este taller pude observar como la necesidad de mayor abstraccion, escalabilidad y
+        mantenibilidad impulsaron la evolucion de las arquitecturas distribuidas. Comenzar con <strong>TCP
+        Sockets</strong> me permitio entender la base de toda comunicacion en red: bytes viajando por un
+        canal bidireccional, sin ninguna convencion sobre como interpretarlos.
+      </p>
+      <br/>
+      <p>
+        La transicion a <strong>HTTP</strong> introdujo el primer contrato comun: verbos, rutas y codigos
+        de estado. Con <strong>RMI</strong> se logro una abstraccion mayor al invocar metodos remotos como
+        si fueran locales, pero al costo de quedar atado a la JVM y a la serializacion de Java.
+      </p>
+      <br/>
+      <p>
+        <strong>gRPC</strong> resolvio ese acoplamiento tecnologico usando Protocol Buffers como contrato
+        independiente del lenguaje, y HTTP/2 para mayor eficiencia. A partir de ahi, los
+        <strong>microservicios</strong> permitieron dividir el dominio en unidades deployables
+        independientemente, cada una con su propio ciclo de vida.
+      </p>
+      <br/>
+      <p>
+        Finalmente, el <strong>API Gateway</strong> simplifica la perspectiva del cliente: en lugar de
+        conocer la ubicacion de cada microservicio, solo necesita hablar con un unico punto de entrada.
+        Cada capa de esta evolucion resuelve limitaciones de la anterior, pero a cambio introduce nuevos
+        desafios operacionales. No existe una arquitectura universalmente superior; la eleccion depende
+        del contexto, el tamano del equipo y los requisitos de escala del sistema.
+      </p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Brayan Loaiza Leal &mdash; ARSW 2026-I &mdash; Escuela Colombiana de Ingenieria Julio Garavito
+</footer>
+
+</body>
+</html>
