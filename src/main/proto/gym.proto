@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "edu.eci.arsw.evolucion.ejercicio_microservices";
+option java_outer_classname = "GymProto";
+
+service GymService {
+  rpc GetAvailableSlots (EmptyGymRequest) returns (SlotList);
+  rpc ReserveSlot       (SlotRequest)     returns (SlotResponse);
+}
+
+message EmptyGymRequest {}
+
+message SlotRequest {
+  string studentId = 1;
+  string timeSlot  = 2;
+}
+
+message SlotResponse {
+  bool   success = 1;
+  string message = 2;
+}
+
+message SlotList {
+  repeated string slots = 1;
+}

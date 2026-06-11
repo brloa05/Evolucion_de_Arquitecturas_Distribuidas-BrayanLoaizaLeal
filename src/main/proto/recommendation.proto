@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "edu.eci.arsw.evolucion.movie_microservices";
+option java_outer_classname = "RecommendationProto";
+
+service RecommendationService {
+  rpc GetRecommendations (RecommendationRequest) returns (RecommendationList);
+}
+
+message RecommendationRequest {
+  int32 movieId = 1;
+}
+
+message RecommendationList {
+  repeated string titles = 1;
+}

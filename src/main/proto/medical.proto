@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "edu.eci.arsw.evolucion.ejercicio_microservices";
+option java_outer_classname = "MedicalProto";
+
+service MedicalService {
+  rpc GetSpecialties   (EmptyRequest)    returns (SpecialtyList);
+  rpc GetSpecialtyInfo (SpecialtyRequest) returns (SpecialtyInfo);
+}
+
+message EmptyRequest {}
+
+message SpecialtyRequest {
+  string name = 1;
+}
+
+message SpecialtyInfo {
+  string name           = 1;
+  int32  availableSlots = 2;
+  string schedule       = 3;
+}
+
+message SpecialtyList {
+  repeated SpecialtyInfo specialties = 1;
+}
