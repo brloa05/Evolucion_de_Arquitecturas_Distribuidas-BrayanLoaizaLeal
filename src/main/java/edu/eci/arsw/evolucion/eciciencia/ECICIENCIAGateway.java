@@ -73,7 +73,7 @@ public class ECICIENCIAGateway {
         String id = p.get("id");
         if (id == null) { respond(ex, 400, err("Parametro 'id' requerido")); return; }
 
-        StudentResponse s = studentStub.getStudent(StudentRequest.newBuilder().setStudentId(id).build());
+        StudentResponse s = studentStub.getStudent(GetStudentRequest.newBuilder().setStudentId(id).build());
         if (!s.getFound()) { respond(ex, 404, err("Estudiante no encontrado")); return; }
         respond(ex, 200, String.format(
                 "{\"studentId\":\"%s\",\"name\":\"%s\",\"email\":\"%s\",\"major\":\"%s\"}",

@@ -133,8 +133,8 @@ public class WellnessGateway {
                 .setStudentId(studentId).setStudentName(name).setInstitutionalEmail(email)
                 .setServiceType(ServiceType.forNumber(typeNum)).setDate(date).build());
 
-        String json = String.format("{\"appointmentId\":\"%s\",\"message\":\"%s\",\"status\":\"%s\"}",
-                res.getAppointmentId(), res.getMessage(), res.getStatus());
+        String json = String.format("{\"appointmentId\":\"%s\",\"message\":\"%s\",\"success\":%b}",
+                res.getAppointmentId(), res.getMessage(), res.getSuccess());
         respond(exchange, 200, json);
     }
 

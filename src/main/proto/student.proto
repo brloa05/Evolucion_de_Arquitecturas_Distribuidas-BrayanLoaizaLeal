@@ -5,11 +5,11 @@ option java_outer_classname = "StudentProto";
 option java_multiple_files = true;
 
 service StudentService {
-  rpc GetStudent       (StudentRequest)  returns (StudentResponse);
-  rpc RegisterStudent  (RegisterRequest) returns (RegisterResponse);
+  rpc GetStudent       (GetStudentRequest) returns (StudentResponse);
+  rpc RegisterStudent  (RegisterRequest)   returns (RegisterResponse);
 }
 
-message StudentRequest {
+message GetStudentRequest {
   string student_id = 1;
 }
 

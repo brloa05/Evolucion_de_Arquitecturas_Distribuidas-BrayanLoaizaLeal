@@ -35,7 +35,7 @@ public class StudentGrpcServer {
         }
 
         @Override
-        public void getStudent(StudentRequest request, StreamObserver<StudentResponse> responseObserver) {
+        public void getStudent(GetStudentRequest request, StreamObserver<StudentResponse> responseObserver) {
             StudentResponse res = students.getOrDefault(request.getStudentId(),
                     StudentResponse.newBuilder().setFound(false).build());
             responseObserver.onNext(res);
